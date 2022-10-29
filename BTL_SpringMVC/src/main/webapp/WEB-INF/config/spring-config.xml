@@ -31,7 +31,7 @@
 		<property name="driverClassName"
 			value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<property name="url"
-			value="jdbc:sqlserver://localhost:1433;databaseName=BTL_SpringMVC" />
+			value="jdbc:sqlserver://localhost:1433;databaseName=springmvc" />
 		<property name="username" value="sa" />
 		<property name="password" value="sa" />
 	</bean>

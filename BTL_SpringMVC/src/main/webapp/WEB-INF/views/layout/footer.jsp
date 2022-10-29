@@ -21,8 +21,14 @@
 <script src="${pageContext.request.contextPath}/css/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/css/js/adminlte.min.js"></script>
 <script src="${pageContext.request.contextPath}/css/js/dashboard.js"></script>
-<script src="${pageContext.request.contextPath}/css/tinymce/tinymce.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/css/tinymce/tinymce.min.js"></script>
 <script src="${pageContext.request.contextPath}/css/tinymce/config.js"></script>
 <script src="${pageContext.request.contextPath}/css/js/function.js"></script>
+<script>
+	document.getElementById('${page}').style.backgroundColor = "CornflowerBlue";
+	document.getElementById('${page}').style.color = "black";
+</script>
+
 </body>
 </html>
