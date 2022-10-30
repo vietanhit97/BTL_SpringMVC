@@ -1,22 +1,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../layout/header.jsp"%>
+<%@ include file="../../layout/header.jsp"%>
 <section class="content">
 	<!-- Default box -->
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title"></h3>
-			<form action="SearchCategores"
+			<form action="searchCategores"
 				method="post" class="form-inline" role="form">
 				<div class="form-group">
 					<input oninput="searchByName(this)" id="content" type="text" name="key" class="form-control" 
-						placeholder="<fmt:message bundle="${bun}" key="Search"/>">
+						placeholder="">
 				</div>
 				<button type="submit" class="btn btn-primary">
 					<i class="fa fa-search" aria-hidden="true"></i>
 				</button>
 				<a
-					href="/admin/category/insertCategory.jsp"
-					class="btn btn-success btn-sm"></a>
+					href="${pageContext.request.contextPath}/category/initInsert"
+					class="btn btn-success btn-sm">ADD NEW CATEGORY</a>
 			</form>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool"
@@ -35,7 +35,7 @@
 					<tr>
 						<th>Id</th>
 						<th>Category Name</th>
-						<th>Status</th>
+						
 						<th></th>
 					</tr>
 				</thead>
@@ -44,13 +44,11 @@
 						<tr>
 							<td>${c.id }</td>
 							<td>${c.name }</td>
-							<td>${c.status }</td>
-							
 							<td><a
-								href="/DeleteCategory?"
+								href="${pageContext.request.contextPath}/category/delete?id=${c.id}"
 								class="btn btn-danger btn-sm"
 								onclick="return confirm('Bạn có muốn xóa không ?')">Delete</a> <a
-								href="${pageContext.request.contextPath}/category/test"
+								href="${pageContext.request.contextPath}/category/preUpdate?id=${c.id}"
 								class="btn btn-success btn-sm">Update</a></td>
 						</tr>
 					</c:forEach>
@@ -72,4 +70,4 @@
 	</div>
 	<!-- /.box -->
 </section>
-<%@ include file="../layout/footer.jsp"%>
+<%@ include file="../../layout/footer.jsp"%>

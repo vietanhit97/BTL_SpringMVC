@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 
 @Entity
 @Table(name = "category")
@@ -18,8 +21,10 @@ public class Category {
 	@Column(name = "cid")
 	private int id;
 	@Column(name = "name")
+	@NotEmpty(message = "Please enter your name")
 	private String name;
 	@Column(name = "status")
+	@NotNull(message = "Please choose")
 	private Boolean status;
 	@OneToMany(mappedBy = "categoryId")
 	private List<Product> products;

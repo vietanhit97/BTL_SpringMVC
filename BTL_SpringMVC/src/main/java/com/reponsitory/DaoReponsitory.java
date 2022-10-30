@@ -7,7 +7,7 @@ public interface DaoReponsitory<T,Id> {
 	List<T> getByName(String name);
 	Long Count();
 	T getById(Integer Id);
-	Boolean add(T t);
-	Boolean edit(T t);
-	Boolean remove(T t);
+	boolean add(T t);
+	boolean edit(T t);
+	boolean remove(Integer id);
 }
