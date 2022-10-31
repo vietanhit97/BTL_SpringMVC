@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface DaoReponsitory<T,Id> {
 	List<T> getListPaginate(Integer page);
+	List<T> getList();
 	List<T> getByName(String name);
 	Long Count();
 	T getById(Integer Id);

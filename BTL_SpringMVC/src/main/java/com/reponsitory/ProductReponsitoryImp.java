@@ -2,30 +2,27 @@ package com.reponsitory;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.model.Category;
+import com.model.Product;
 
 @Repository
-public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer> {
+public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public List<Category> getListPaginate(Integer page) {
+	public List<Product> getListPaginate(Integer page) {
 		int max = 4;
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			List<Category> data = session.createCriteria(Category.class).setMaxResults(max)
+			List<Product> data = session.createCriteria(Product.class).setMaxResults(max)
 					.setFirstResult((page - 1) * max).list();
 			session.close();
 			return data;
@@ -38,14 +35,12 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public List<Category> getByName(String name) {
-		// TODO Auto-generated method stub
-		int max = 4;
+	public List<Product> getByName(String name) {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
-			List<Category> data = session.createCriteria(Category.class)
-					.add(Restrictions.like("name", "%" + name + "%")).list();
+			List<Product> data = session.createCriteria(Product.class).add(Restrictions.like("name", "%" + name + "%"))
+					.list();
 			return data;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -57,11 +52,29 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public Category getById(Integer Id) {
+	public Long Count() {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			Long count = (Long) session.createCriteria(Product.class).setProjection(Projections.rowCount())
+					.uniqueResult();
+			return count;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
+
+	@Override
+	public Product getById(Integer Id) {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
-			Category c = (Category) session.get(Category.class, Id);
+			Product c = (Product) session.get(Product.class, Id);
 			session.getTransaction().commit();
 			return c;
 		} catch (Exception e) {
@@ -75,7 +88,7 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public boolean add(Category t) {
+	public boolean add(Product t) {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
@@ -93,7 +106,7 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public boolean edit(Category t) {
+	public boolean edit(Product t) {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
@@ -112,56 +125,13 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 
 	@Override
 	public boolean remove(Integer id) {
-		Session session = null;
-		try {
-			session = sessionFactory.openSession();
-			session.beginTransaction();
-			Category category = (Category) session.get(Category.class, id);
-			session.delete(category);
-			session.beginTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.getStackTrace();
-			session.getTransaction().rollback();
-		} finally {
-			session.close();
-		}
+		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Long Count() {
-		Session session = null;
-		try {
-			session = sessionFactory.openSession();
-			session.beginTransaction();
-			Long count = (Long) session.createCriteria(Category.class).setProjection(Projections.rowCount())
-					.uniqueResult();
-			return count;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.getStackTrace();
-		} finally {
-			session.close();
-		}
-		return null;
-	}
-
-	@Override
-	public List<Category> getList() {
-		Session session = null;
-		try {
-			session = sessionFactory.openSession();
-			session.beginTransaction();
-			List<Category> data = session.createCriteria(Category.class).list();
-			session.close();
-			return data;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.getStackTrace();
-			session.close();
-		}
+	public List<Product> getList() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

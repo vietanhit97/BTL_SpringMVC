@@ -192,8 +192,8 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href=""><i class="fa fa-circle-o"></i> Dashboard
-									v1</a></li>
+							<li><a href="${pageContext.request.contextPath}/category/data"><i class="fa fa-circle-o"></i> Category
+								Details</a></li>
 						</ul></li>
 				</ul>
 				<ul class="sidebar-menu" data-widget="tree">
@@ -204,8 +204,7 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href=""><i class="fa fa-circle-o"></i> Dashboard
-									v1</a></li>
+							<li><a href="${pageContext.request.contextPath}/product/data"><i class="fa fa-circle-o"></i> Product Details</a></li>
 						</ul></li>
 				</ul>
 				<ul class="sidebar-menu" data-widget="tree">
@@ -216,8 +215,8 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href=""><i class="fa fa-circle-o"></i> Dashboard
-									v1</a></li>
+							<li><a href="${pageContext.request.contextPath}/order/data"><i class="fa fa-circle-o"></i>Order
+									Details</a></li>
 						</ul></li>
 				</ul>
 			</section>

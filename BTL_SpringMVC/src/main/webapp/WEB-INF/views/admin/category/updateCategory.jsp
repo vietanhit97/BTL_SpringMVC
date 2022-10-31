@@ -27,16 +27,15 @@
 				</div>
 				<div class="form-group">
 					<label for="">Category Name:</label>
-					<form:input path="name"  required="required" readonly="readonly"/>
+					<form:input path="name" cssClass="form-control"  required="required" readonly="readonly"/>
 					
 				</div>
 				<div class="form-group">
 					<label for="">Status:</label>
 					<form:radiobutton path="status" value="true" />
-					true
+					Show
 					<form:radiobutton path="status" value="false" />
-					false 
-					
+					Hidden 
 				</div>
 				<button type="submit" class="btn btn-primary">Update New</button>
 			</form:form>

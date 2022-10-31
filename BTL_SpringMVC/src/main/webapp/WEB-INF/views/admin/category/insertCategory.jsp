@@ -28,16 +28,16 @@
 			<form:form action="insert" modelAttribute="c" method="post">
 				<div class="form-group">
 					<label for="">Category Name:</label>
-					<form:input path="name"  />
+					<form:input path="name"  cssClass="form-control"/>
 					<br>
-					<form:errors path="name" cssClass="erorr"/>
+					<form:errors path="name" cssClass="erorr"/> 
 				</div>
 				<div class="form-group">
 					<label for="">Status:</label>
 					<form:radiobutton path="status" value="true" />
-					true
+					Show
 					<form:radiobutton path="status" value="false" />
-					false <br>
+					Hidden <br>
 					<form:errors path="status" cssClass="erorr" />
 				</div>
 				<button type="submit" class="btn btn-primary">Add New</button>
