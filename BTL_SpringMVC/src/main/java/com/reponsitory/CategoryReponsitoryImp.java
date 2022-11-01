@@ -118,15 +118,13 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 			session = sessionFactory.openSession();
 			session.beginTransaction();
 			Category category = (Category) session.get(Category.class, id);
-			session.delete(category);
+			session.remove(category);
 			session.beginTransaction().commit();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
 			session.getTransaction().rollback();
-		} finally {
-			session.close();
 		}
 		return false;
 	}

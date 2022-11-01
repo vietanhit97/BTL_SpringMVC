@@ -134,4 +134,11 @@ public class ProductController {
 		model.addAttribute("page", page);
 		return "admin/product/searchListProducts";	
 	}
+	@GetMapping(value = "/delete")
+	public String remove(@RequestParam("id") Integer id) {
+		System.out.println(id);
+		productReponsitory.remove(id);
+		return "redirect:/product/data";
+	}
+
 }
