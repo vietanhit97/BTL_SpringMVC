@@ -28,13 +28,13 @@ public class CategoryController {
 		int page = Integer.parseInt(param.getOrDefault("page", "1"));
 		List<Category> data = daoReponsitory.getListPaginate(page);
 		model.addAttribute("data", data);
-		Long count = daoReponsitory.Count();
+		Long count = daoReponsitory.count();
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);
 		return "admin/category/category";
 	}
 
-	@GetMapping(value ="/delete")
+	@GetMapping(value = "/delete")
 	public String remove(@RequestParam("id") Integer id) {
 		Boolean bl = daoReponsitory.remove(id);
 		return "redirect:/category/data";
@@ -73,7 +73,7 @@ public class CategoryController {
 
 	@PostMapping(value = "/update")
 	public String update(@ModelAttribute("category") Category c, HttpSession session, Model model) {
-		
+
 		boolean bl = daoReponsitory.edit(c);
 		if (bl) {
 			return "redirect:/category/data";
@@ -82,10 +82,17 @@ public class CategoryController {
 			return "admin/category/updateCategory";
 		}
 	}
-	@PostMapping(value = "/searchCategores")
-	public String search(@RequestParam("key") String key, Model model) {
-		List<Category> data = daoReponsitory.getByName(key);
+
+	@GetMapping(value = "/searchCategores")
+	public String search(@RequestParam("key") String key,@RequestParam(required = false) Map<String, String> param, 
+			Model model) {
+		int page = Integer.parseInt(param.getOrDefault("page", "1"));
+		List<Category> data = daoReponsitory.getByName(key, page);
 		model.addAttribute("data", data);
-		return "admin/category/category";	
+		Long count = daoReponsitory.countSearch(key);
+		model.addAttribute("count", count);
+		model.addAttribute("page", page);
+		model.addAttribute("key", key);
+		return "admin/category/searchListCategories";
 	}
 }

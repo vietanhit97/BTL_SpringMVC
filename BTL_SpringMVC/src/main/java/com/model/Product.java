@@ -47,7 +47,6 @@ public class Product {
 	private Category categoryId;
 	@OneToMany(mappedBy = "productId")
 	private List<Order> orders;
-
 	public Product() {
 		super();
 	}

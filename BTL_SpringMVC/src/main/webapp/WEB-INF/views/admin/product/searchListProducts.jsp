@@ -1,11 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../layout/header.jsp"%>
+
 <section class="content">
 	<!-- Default box -->
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title"></h3>
-			<form action="searchCategores" method="get" class="form-inline"
+			<form action="searchProducts" method="post" class="form-inline"
 				role="form">
 				<div class="form-group">
 					<input oninput="searchByName(this)" id="content" type="text"
@@ -14,8 +16,8 @@
 				<button type="submit" class="btn btn-primary">
 					<i class="fa fa-search" aria-hidden="true"></i>
 				</button>
-				<a href="${pageContext.request.contextPath}/category/initInsert"
-					class="btn btn-success btn-sm">ADD NEW CATEGORY</a>
+				<a href="${pageContext.request.contextPath}/product/initInsert"
+					class="btn btn-success btn-sm">ADD NEW PRODUCT</a>
 			</form>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool"
@@ -32,19 +34,29 @@
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Id</th>
-						<th>Category Name</th>
+						<th>ID</th>
+						<th>Product Name</th>
+						<th>Image</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>Category Product</th>
 						<th>Status</th>
-						<th></th>
+						<th>
+						 
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${data}" var="c">
+					<c:forEach items="${data}" var="p">
 						<tr>
-							<td>${c.id }</td>
-							<td>${c.name }</td>
+							<td>${p.id }</td>
+							<td>${p.name }</td>
+							<td><img src="<c:url value="/resources/images/${p.image }" />" width="60px"></td>
+							<td><fmt:formatNumber value="${p.price }"/> VND</td>					
+							<td>${p.quantity }</td>
+							<td>${p.categoryId.name}</td>
 							<td><c:choose>
-									<c:when test="${c.status==true}">
+									<c:when test="${p.status==true}">
 										<span class="label label-success">Show</span>
 									</c:when>
 									<c:otherwise>
@@ -52,10 +64,10 @@
 									</c:otherwise>
 								</c:choose></td>
 							<td><a
-								href="${pageContext.request.contextPath}/category/delete?id=${c.id}"
+								href="${pageContext.request.contextPath}/product/delete?id=${p.id}"
 								class="btn btn-danger btn-sm"
 								onclick="return confirm('Bạn có muốn xóa không ?')">Delete</a> <a
-								href="${pageContext.request.contextPath}/category/preUpdate?id=${c.id}"
+								href="${pageContext.request.contextPath}/product/preUpdate?id=${p.id}"
 								class="btn btn-success btn-sm">Update</a></td>
 						</tr>
 					</c:forEach>
@@ -68,7 +80,7 @@
 				<ul class="pagination">
 					<c:forEach begin="1" end="${Math.ceil(count/4)}" var="i">
 						<li class="page-item"><a class="page-link" id="${i}"
-							href="${pageContext.request.contextPath}/category/data?page=${i}">${i}</a></li>
+							href="${pageContext.request.contextPath}/product/searchProducts?page=${i}">${i}</a></li>
 					</c:forEach>
 				</ul>
 			</nav>

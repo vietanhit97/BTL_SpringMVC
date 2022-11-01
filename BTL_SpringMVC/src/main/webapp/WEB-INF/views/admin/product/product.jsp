@@ -1,12 +1,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../layout/header.jsp"%>
+
 <section class="content">
 	<!-- Default box -->
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title"></h3>
-			<form action="searchCategores" method="post" class="form-inline"
+			<form action="searchProducts" method="post" class="form-inline"
 				role="form">
 				<div class="form-group">
 					<input oninput="searchByName(this)" id="content" type="text"
@@ -40,7 +41,9 @@
 						<th>Quantity</th>
 						<th>Category Product</th>
 						<th>Status</th>
-						<th></th>
+						<th>
+						 
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -48,8 +51,8 @@
 						<tr>
 							<td>${p.id }</td>
 							<td>${p.name }</td>
-							<td>${p.image }</td>
-							<td><fmt:formatNumber value="${p.price }"/> VND</td>
+							<td><img src="<c:url value="/resources/images/${p.image }" />" width="60px"></td>
+							<td><fmt:formatNumber value="${p.price }"/> VND</td>					
 							<td>${p.quantity }</td>
 							<td>${p.categoryId.name}</td>
 							<td><c:choose>
@@ -61,10 +64,10 @@
 									</c:otherwise>
 								</c:choose></td>
 							<td><a
-								href="${pageContext.request.contextPath}/category/delete?id=${c.id}"
+								href="${pageContext.request.contextPath}/product/delete?id=${p.id}"
 								class="btn btn-danger btn-sm"
 								onclick="return confirm('Bạn có muốn xóa không ?')">Delete</a> <a
-								href="${pageContext.request.contextPath}/category/preUpdate?id=${c.id}"
+								href="${pageContext.request.contextPath}/product/preUpdate?id=${p.id}"
 								class="btn btn-success btn-sm">Update</a></td>
 						</tr>
 					</c:forEach>

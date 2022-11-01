@@ -5,7 +5,7 @@
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title"></h3>
-			<form action="searchCategores" method="get" class="form-inline"
+			<form action="searchCategores" method="post" class="form-inline"
 				role="form">
 				<div class="form-group">
 					<input oninput="searchByName(this)" id="content" type="text"
@@ -68,7 +68,7 @@
 				<ul class="pagination">
 					<c:forEach begin="1" end="${Math.ceil(count/4)}" var="i">
 						<li class="page-item"><a class="page-link" id="${i}"
-							href="${pageContext.request.contextPath}/category/data?page=${i}">${i}</a></li>
+							href="${pageContext.request.contextPath}/category/searchCategores?key=${key}?page=${i}">${i}</a></li>
 					</c:forEach>
 				</ul>
 			</nav>

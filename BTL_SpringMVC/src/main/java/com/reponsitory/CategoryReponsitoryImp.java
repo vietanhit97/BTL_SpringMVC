@@ -38,14 +38,15 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public List<Category> getByName(String name) {
+	public List<Category> getByName(String name, int page) {
 		// TODO Auto-generated method stub
 		int max = 4;
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
 			List<Category> data = session.createCriteria(Category.class)
-					.add(Restrictions.like("name", "%" + name + "%")).list();
+					.add(Restrictions.like("name", "%" + name + "%")).setMaxResults(max)
+					.setFirstResult((page - 1) * max).list();
 			return data;
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -131,7 +132,7 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public Long Count() {
+	public Long count() {
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
@@ -160,6 +161,24 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
+			session.close();
+		}
+		return null;
+	}
+
+	@Override
+	public Long countSearch(String key) {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			Long count = (Long) session.createCriteria(Category.class).setProjection(Projections.rowCount())
+					.add(Restrictions.like("name", "%" + key + "%")).uniqueResult();
+			return count;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+		} finally {
 			session.close();
 		}
 		return null;
