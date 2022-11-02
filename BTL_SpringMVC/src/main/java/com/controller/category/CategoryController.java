@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,9 +33,9 @@ public class CategoryController {
 		return "admin/category/category";
 	}
 
-	@GetMapping(value = "/delete")
-	public String remove(@RequestParam("id") Integer id) {
-		Boolean bl = daoReponsitory.remove(id);
+	@RequestMapping(value = "/delete")
+	public String xoa(@RequestParam("id") Integer id) {
+		daoReponsitory.delete(id);
 		return "redirect:/category/data";
 	}
 
@@ -84,7 +83,7 @@ public class CategoryController {
 	}
 
 	@GetMapping(value = "/searchCategores")
-	public String search(@RequestParam("key") String key,@RequestParam(required = false) Map<String, String> param, 
+	public String search(@RequestParam("key") String key, @RequestParam(required = false) Map<String, String> param,
 			Model model) {
 		int page = Integer.parseInt(param.getOrDefault("page", "1"));
 		List<Category> data = daoReponsitory.getByName(key, page);

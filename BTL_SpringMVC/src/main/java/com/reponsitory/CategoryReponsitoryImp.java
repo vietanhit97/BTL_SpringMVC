@@ -10,7 +10,6 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.model.Category;
 
 @Repository
@@ -76,11 +75,11 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public boolean add(Category t) {
+	public boolean add(Category c) {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
-			session.save(t);
+			session.save(c);
 			session.getTransaction().commit();
 			return true;
 		} catch (Exception e) {
@@ -112,19 +111,20 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 	}
 
 	@Override
-	public boolean remove(Integer id) {
-		Session session = null;
+	public Boolean delete(Integer id) {
+		Session session = sessionFactory.openSession();
 		try {
-			session = sessionFactory.openSession();
 			session.beginTransaction();
-			Category category = (Category) session.get(Category.class, id);
-			session.remove(category);
-			session.beginTransaction().commit();
+			Category c = session.load(Category.class, id);
+			session.remove(c);
+			session.getTransaction().commit();
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
 			session.getTransaction().rollback();
+		} finally {
+			session.close();
 		}
 		return false;
 	}

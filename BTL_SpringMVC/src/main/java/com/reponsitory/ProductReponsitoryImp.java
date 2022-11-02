@@ -127,21 +127,18 @@ public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 	}
 
 	@Override
-	public boolean remove(Integer id) {
-		Session session = null;
+	public Boolean delete(Integer id) {
+		Session session = sessionFactory.openSession();
 		try {
-			session = sessionFactory.openSession();
 			session.beginTransaction();
-			int kb = session.createQuery("delete from Product where pid = :id").setParameter("id", id).executeUpdate();
-			System.out.println(kb);
-			session.beginTransaction().commit();
-			if (kb > 0) {
-				return true;
-			}
+			Product p = session.load(Product.class, id);
+			session.remove(p);
+			session.getTransaction().commit();	
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
-			session.getTransaction().rollback();
+			session.getTransaction().rollback();	
 		} finally {
 			session.close();
 		}
