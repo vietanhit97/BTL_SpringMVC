@@ -215,8 +215,8 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="${pageContext.request.contextPath}/order/data"><i class="fa fa-circle-o"></i>Order
-									Details</a></li>
+							<li><a href="${pageContext.request.contextPath}/ordersImport/data"><i class="fa fa-circle-o"></i>Order
+									Import</a></li>
 						</ul></li>
 				</ul>
 			</section>

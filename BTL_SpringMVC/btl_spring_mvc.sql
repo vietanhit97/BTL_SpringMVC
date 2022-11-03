@@ -21,12 +21,12 @@ CREATE TABLE product (
   foreign key(categoryId) references category(cid)
 )
 go
-create table [order](
+create table orders(
   oid INT primary key identity,
   total_amount float,
   quantity int not null,
   role bit default(0),
-  create_date date default(CURRENT_TIMESTAMP),
+  create_date date default(CURRENT_TIMESTAMP) ,
   productId int not null,
   foreign key(productId) references product(pid)
 )

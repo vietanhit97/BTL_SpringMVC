@@ -32,8 +32,7 @@ public class Product {
 	@Min(value = 0 , message = "Value should be greater then then equal to 0")
 	private Float price;
 	@NotNull(message = "Please enter your quantity")
-	@Max(value = 1000 , message = "Value should be greater then then equal to 1000 product")
-	@Min(value = 1 , message = "Value should be greater then then equal to 1")
+	@Max(value = 10000 , message = "Value should be greater then then equal to 10000 product")
 	@Column(name = "quantity")
 	private int quantity;
 	@Column(name = "image")
@@ -46,13 +45,13 @@ public class Product {
 	@NotNull(message = "Please choose categoryId")
 	private Category categoryId;
 	@OneToMany(mappedBy = "productId")
-	private List<Order> orders;
+	private List<Orders> orders;
 	public Product() {
 		super();
 	}
 
 	public Product(int id, String name, Float price, int quantity, String image, Boolean status, Category categoryId,
-			List<Order> orders) {
+			List<Orders> orders) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -120,11 +119,11 @@ public class Product {
 		this.categoryId = categoryId;
 	}
 
-	public List<Order> getOrders() {
+	public List<Orders> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<Orders> orders) {
 		this.orders = orders;
 	}
 

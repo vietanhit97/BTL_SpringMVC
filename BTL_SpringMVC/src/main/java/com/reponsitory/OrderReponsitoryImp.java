@@ -1,30 +1,26 @@
 package com.reponsitory;
 
 import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.model.Category;
-import com.model.Product;
+import com.model.Orders;
 
 @Repository
-public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
+public class OrderReponsitoryImp implements DaoReponsitory<Orders, Integer>{
 	@Autowired
 	private SessionFactory sessionFactory;
-
 	@Override
-	public List<Product> getListPaginate(Integer page) {
+	public List<Orders> getListPaginate(Integer page) {
 		int max = 4;
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			List<Product> data = session.createCriteria(Product.class).setMaxResults(max)
+			List<Orders> data = session.createCriteria(Orders.class).add(Restrictions.eq("role", 1)).setMaxResults(max)
 					.setFirstResult((page - 1) * max).list();
 			session.close();
 			return data;
@@ -37,12 +33,18 @@ public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 	}
 
 	@Override
-	public List<Product> getByName(String name, int page) {
+	public List<Orders> getList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Orders> getByName(String name, int page) {
 		int max = 4;
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
-			List<Product> data = session.createCriteria(Product.class).add(Restrictions.like("name", "%" + name + "%"))
+			List<Orders> data = session.createCriteria(Orders.class).add(Restrictions.ilike("name", "%" + name + "%"))
 					.setMaxResults(max).setFirstResult((page - 1) * max).list();
 			return data;
 		} catch (Exception e) {
@@ -60,7 +62,7 @@ public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 		try {
 			session = sessionFactory.openSession();
 			session.beginTransaction();
-			Long count = (Long) session.createCriteria(Product.class).setProjection(Projections.rowCount())
+			Long count = (Long) session.createCriteria(Orders.class).setProjection(Projections.rowCount())
 					.uniqueResult();
 			return count;
 		} catch (Exception e) {
@@ -73,13 +75,19 @@ public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 	}
 
 	@Override
-	public Product getById(Integer Id) {
+	public Long countSearch(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Orders getById(Integer Id) {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
-			Product c = (Product) session.get(Product.class, Id);
+			Orders o = (Orders) session.get(Orders.class, Id);
 			session.getTransaction().commit();
-			return c;
+			return o;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -91,7 +99,7 @@ public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 	}
 
 	@Override
-	public boolean add(Product t) {
+	public boolean add(Orders t) {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
@@ -109,20 +117,8 @@ public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 	}
 
 	@Override
-	public boolean edit(Product t) {
-		Session session = sessionFactory.openSession();
-		try {
-			session.beginTransaction();
-			session.update(t);
-			session.getTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			session.getTransaction().rollback();
-		} finally {
-			session.close();
-		}
+	public boolean edit(Orders t) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -131,52 +127,18 @@ public class ProductReponsitoryImp implements DaoReponsitory<Product, Integer> {
 		Session session = sessionFactory.openSession();
 		try {
 			session.beginTransaction();
-			Product p = session.load(Product.class, id);
-			session.remove(p);
-			session.getTransaction().commit();
+			Orders o = session.load(Orders.class, id);
+			session.remove(o);
+			session.getTransaction().commit();	
 			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.getStackTrace();
-			session.getTransaction().rollback();
+			session.getTransaction().rollback();	
 		} finally {
 			session.close();
 		}
 		return false;
 	}
 
-	@Override
-	public List<Product> getList() {
-		Session session = null;
-		try {
-			session = sessionFactory.openSession();
-			session.beginTransaction();
-			List<Product> data = session.createCriteria(Product.class).list();
-			return data;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.getStackTrace();
-		}finally {
-			session.close();
-		}
-		return null;
-	}
-
-	@Override
-	public Long countSearch(String key) {
-		Session session = null;
-		try {
-			session = sessionFactory.openSession();
-			session.beginTransaction();
-			Long count = (Long) session.createCriteria(Category.class).setProjection(Projections.rowCount())
-					.add(Restrictions.like("name", "%" + key + "%")).uniqueResult();
-			return count;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.getStackTrace();
-		} finally {
-			session.close();
-		}
-		return null;
-	}
 }

@@ -1,5 +1,8 @@
 package com.model;
 
+
+
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,9 +12,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "orders")
+public class Orders {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "oid")
@@ -21,22 +26,24 @@ public class Order {
 	@Column(name = "quantity")
 	private Integer quantity;
 	@Column(name = "role")
-	private Boolean role;
+	private int role;
+	@Column(name = "create_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date date;
 	@ManyToOne
-	@JoinColumn(name = "productId",referencedColumnName = "pid")
+	@JoinColumn(name = "productId", referencedColumnName = "pid")
 	private Product productId;
-	
-	public Order() {
+	public Orders() {
 		super();
 	}
-
-	public Order(int id, Float totalAmount, Integer quantity, Boolean role, Product product_id) {
+	public Orders(int id, Float totalAmount, Integer quantity, int role, Date date, Product productId) {
 		super();
 		this.id = id;
 		this.totalAmount = totalAmount;
 		this.quantity = quantity;
 		this.role = role;
-		this.productId = product_id;
+		this.date = date;
+		this.productId = productId;
 	}
 
 	public int getId() {
@@ -63,20 +70,28 @@ public class Order {
 		this.quantity = quantity;
 	}
 
-	public Boolean getRole() {
+	public int getRole() {
 		return role;
 	}
 
-	public void setRole(Boolean role) {
+	public void setRole(int role) {
 		this.role = role;
 	}
 
-	public Product getProduct_id() {
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Product getProductId() {
 		return productId;
 	}
 
-	public void setProduct_id(Product product_id) {
-		this.productId = product_id;
+	public void setProductId(Product productId) {
+		this.productId = productId;
 	}
-	
+
 }

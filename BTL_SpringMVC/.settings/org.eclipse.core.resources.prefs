@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/views/admin/category/category.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/category/searchListCategories.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/admin/ordersImport/ordersImport.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/product/insertProduct.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/product/product.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/admin/product/searchListProducts.jsp=UTF-8
