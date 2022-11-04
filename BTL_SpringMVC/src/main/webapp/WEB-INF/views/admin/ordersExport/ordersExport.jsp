@@ -15,8 +15,8 @@
 				<button type="submit" class="btn btn-primary">
 					<i class="fa fa-search" aria-hidden="true"></i>
 				</button>
-				<a href="${pageContext.request.contextPath}/ordersImport/initInsert"
-					class="btn btn-success btn-sm">Create Orders Import</a>
+				<a href="${pageContext.request.contextPath}/ordersExport/initInsert"
+					class="btn btn-success btn-sm">Create Orders Export</a>
 			</form>
 			<div class="box-tools pull-right">
 				<button type="button" class="btn btn-box-tool"
@@ -68,7 +68,7 @@
 				<ul class="pagination">
 					<c:forEach begin="1" end="${Math.ceil(count/4)}" var="i">
 						<li class="page-item"><a class="page-link" id="${i}"
-							href="${pageContext.request.contextPath}/ordersImport/data?page=${i}">${i}</a></li>
+							href="${pageContext.request.contextPath}/ordersExport/data?page=${i}">${i}</a></li>
 					</c:forEach>
 				</ul>
 			</nav>

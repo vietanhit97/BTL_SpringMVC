@@ -75,10 +75,12 @@ public class ProductController {
 			}
 			boolean bl = productReponsitory.add(p);
 			if (bl) {
+				model.addAttribute("err", "Add New Successful");
 				return "redirect:/product/data";
 			} else {
 				model.addAttribute("p", p);
 				List<Category> c = categoryReponsitory.getList();
+				model.addAttribute("err", "Add New Failed");
 				model.addAttribute("c", c);
 				return "admin/product/insertCategory";
 			}
@@ -115,29 +117,40 @@ public class ProductController {
 			}
 			boolean bl = productReponsitory.edit(p);
 			if (bl) {
+				model.addAttribute("err", "Update New Successful");
 				return "redirect:/product/data";
 			} else {
 				model.addAttribute("p", p);
 				List<Category> c = categoryReponsitory.getList();
 				model.addAttribute("c", c);
+				model.addAttribute("err", "Update New Failed");
 				return "admin/product/updateProduct";
 			}
 		}
 	}
+
 	@PostMapping(value = "/searchProducts")
-	public String search(@RequestParam("key") String key,@RequestParam(required = false) Map<String, String> param, Model model) {
+	public String search(@RequestParam("key") String key, @RequestParam(required = false) Map<String, String> param,
+			Model model) {
 		int page = Integer.parseInt(param.getOrDefault("page", "1"));
-		List<Product> data = productReponsitory.getByName(key,page);
+		List<Product> data = productReponsitory.getByName(key, page);
 		model.addAttribute("data", data);
 		Long count = productReponsitory.countSearch(key);
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);
-		return "admin/product/searchListProducts";	
+		return "admin/product/searchListProducts";
 	}
+
 	@GetMapping(value = "/delete")
-	public String remove(@RequestParam("id") Integer id) {
-		productReponsitory.delete(id);
-		return "redirect:/product/data";
+	public String remove(@RequestParam("id") Integer id, Model model) {
+		boolean bl = productReponsitory.delete(id);
+		if (bl) {
+			model.addAttribute("err", "Delete Successful");
+			return "redirect:/product/data";
+		} else {
+			model.addAttribute("err", "Delete Failed");
+			return "redirect:/product/data";
+		}
 	}
 
 }

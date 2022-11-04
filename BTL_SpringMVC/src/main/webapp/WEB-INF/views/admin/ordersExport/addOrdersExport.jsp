@@ -25,8 +25,8 @@
 			</div>
 		</div>
 		<div class="box-body">
-			<form:form method="post" action="insertImport" modelAttribute="o">
-				<form:input path="role" type="hidden" value="1" />
+			<form:form method="post" action="insertExport" modelAttribute="o">
+				<form:input path="role" type="hidden" value="0" />
 				<div class="form-group">
 					<label for="">Product Name :</label>
 					<form:select path="productId.id" cssClass="form-control">

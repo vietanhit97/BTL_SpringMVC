@@ -18,8 +18,8 @@ import com.model.Product;
 import com.reponsitory.DaoReponsitory;
 
 @Controller
-@RequestMapping(value = "/ordersImport")
-public class OrdersImportController {
+@RequestMapping(value = "/ordersExport")
+public class OrdersEmportController {
 	@Autowired
 	private DaoReponsitory<Product, Integer> productReponsitory;
 	@Autowired
@@ -28,12 +28,12 @@ public class OrdersImportController {
 	@GetMapping(value = "/data")
 	public String home(@RequestParam(required = false) Map<String, String> param, Model model) {
 		int page = Integer.parseInt(param.getOrDefault("page", "1"));
-		List<Orders> data = ordersReponsitory.getListPaginate(page);
+		List<Orders> data = ordersReponsitory.getListPaginateEmport(page);
 		model.addAttribute("data", data);
-		Long count = ordersReponsitory.countImport();
+		Long count = ordersReponsitory.countExport();
 		model.addAttribute("count", count);
 		model.addAttribute("page", page);
-		return "admin/ordersImport/ordersImport";
+		return "admin/ordersExport/ordersExport";
 	}
 
 	@GetMapping(value = "/initInsert")
@@ -42,38 +42,47 @@ public class OrdersImportController {
 		List<Product> p = productReponsitory.getList();
 		model.addAttribute("o", o);
 		model.addAttribute("p", p);
-		return "admin/ordersImport/addOrdersImport";
+		return "admin/ordersExport/addOrdersExport";
 	}
 
-	@PostMapping(value = "/insertImport")
+	@PostMapping(value = "/insertExport")
 	public String insert(@Valid @ModelAttribute("o") Orders o, BindingResult bindingResult, Model model) {
+		List<Product> data = productReponsitory.getList();
 		if (bindingResult.hasErrors()) {
-			List<Product> p = productReponsitory.getList();
 			model.addAttribute("o", o);
-			model.addAttribute("p", p);
-			return "admin/ordersImport/addOrdersImport";
+			model.addAttribute("p", data);
+			return "admin/ordersExport/addOrdersExport";
 		} else {
 			Product p = productReponsitory.getById(o.getProductId().getId());
-			p.setQuantity(p.getQuantity() + o.getQuantity());
-			o.setTotalAmount(o.getQuantity() * p.getPrice());
-			o.setDate(new Date());
-			ordersReponsitory.add(o);
-			productReponsitory.edit(p);
-			model.addAttribute("err", "Create Successful");
-			return "redirect:/ordersImport/data";
+			if (p.getQuantity() < o.getQuantity()) {
+				model.addAttribute("o", o);
+				model.addAttribute("p", data);
+				model.addAttribute("err", "Quantity not enough in stock !");
+				return "admin/ordersExport/addOrdersExport";
+			} else {
+				p.setQuantity(p.getQuantity() - o.getQuantity());
+				o.setTotalAmount(o.getQuantity() * p.getPrice());
+				o.setDate(new Date());
+				ordersReponsitory.add(o);
+				productReponsitory.edit(p);
+				model.addAttribute("err", "Create Successful");
+				return "redirect:/ordersExport/data";
+			}
 		}
 	}
 
 	@GetMapping(value = "/delete")
 	public String remove(@RequestParam("id") Integer id, Model model) {
 		boolean bl = ordersReponsitory.delete(id);
+		;
 		if (bl) {
 			model.addAttribute("err", "Delete Successful");
-			return "redirect:/ordersImport/data";
+			return "redirect:/ordersExport/data";
 		} else {
 			model.addAttribute("err", "Delete Failed");
-			return "redirect:/ordersImport/data";
+			return "redirect:/ordersExport/data";
 		}
+
 	}
 
 	@GetMapping(value = "/detail")

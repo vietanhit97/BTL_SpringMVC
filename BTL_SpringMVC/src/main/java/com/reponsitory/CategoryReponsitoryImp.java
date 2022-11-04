@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.model.Category;
+import com.model.Orders;
 
 @Repository
 public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer> {
@@ -179,6 +180,24 @@ public class CategoryReponsitoryImp implements DaoReponsitory<Category, Integer>
 		} finally {
 			session.close();
 		}
+		return null;
+	}
+
+	@Override
+	public List<Orders> getListPaginateEmport(Integer page) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long countImport() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long countExport() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

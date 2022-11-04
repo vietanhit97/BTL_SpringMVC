@@ -34,7 +34,7 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/delete")
-	public String xoa(@RequestParam("id") Integer id) {
+	public String xoa(@RequestParam("id") Integer id, HttpSession session, Model model) {
 		daoReponsitory.delete(id);
 		return "redirect:/category/data";
 	}
@@ -58,6 +58,7 @@ public class CategoryController {
 				return "redirect:/category/data";
 			} else {
 				model.addAttribute("c", c);
+				model.addAttribute("err", "Add New Failed");
 				return "admin/category/insertCategory";
 			}
 		}
@@ -72,12 +73,13 @@ public class CategoryController {
 
 	@PostMapping(value = "/update")
 	public String update(@ModelAttribute("category") Category c, HttpSession session, Model model) {
-
 		boolean bl = daoReponsitory.edit(c);
 		if (bl) {
+			model.addAttribute("err", "Update New Successful");
 			return "redirect:/category/data";
 		} else {
 			model.addAttribute("c", c);
+			model.addAttribute("err", "Update New Failed");
 			return "admin/category/updateCategory";
 		}
 	}

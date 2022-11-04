@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.model.Orders;
 
 @Repository
-public class OrderReponsitoryImp implements DaoReponsitory<Orders, Integer>{
+public class OrderImportReponsitoryImp implements DaoReponsitory<Orders, Integer>{
 	@Autowired
 	private SessionFactory sessionFactory;
 	@Override
@@ -140,5 +140,58 @@ public class OrderReponsitoryImp implements DaoReponsitory<Orders, Integer>{
 		}
 		return false;
 	}
+	@Override
+	public List<Orders> getListPaginateEmport(Integer page) {
+		int max = 4;
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			List<Orders> data = session.createCriteria(Orders.class).add(Restrictions.eq("role", 0)).setMaxResults(max)
+					.setFirstResult((page - 1) * max).list();
+			session.close();
+			return data;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+			session.close();
+		}
+		return null;
+	}
 
+	@Override
+	public Long countImport() {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			Long count = (Long) session.createCriteria(Orders.class).add(Restrictions.eq("role", 1)).setProjection(Projections.rowCount())
+					.uniqueResult();
+			return count;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
+
+	@Override
+	public Long countExport() {
+		Session session = null;
+		try {
+			session = sessionFactory.openSession();
+			session.beginTransaction();
+			Long count = (Long) session.createCriteria(Orders.class).add(Restrictions.eq("role", 0)).setProjection(Projections.rowCount())
+					.uniqueResult();
+			return count;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.getStackTrace();
+		} finally {
+			session.close();
+		}
+		return null;
+	}
 }

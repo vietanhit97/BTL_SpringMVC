@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -192,8 +193,9 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="${pageContext.request.contextPath}/category/data"><i class="fa fa-circle-o"></i> Category
-								Details</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/category/data"><i
+									class="fa fa-circle-o"></i> Category Details</a></li>
 						</ul></li>
 				</ul>
 				<ul class="sidebar-menu" data-widget="tree">
@@ -204,7 +206,9 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="${pageContext.request.contextPath}/product/data"><i class="fa fa-circle-o"></i> Product Details</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/product/data"><i
+									class="fa fa-circle-o"></i> Product Details</a></li>
 						</ul></li>
 				</ul>
 				<ul class="sidebar-menu" data-widget="tree">
@@ -215,9 +219,13 @@
 						</span>
 					</a>
 						<ul class="treeview-menu">
-							<li><a href="${pageContext.request.contextPath}/ordersImport/data"><i class="fa fa-circle-o"></i>Order
-									Import</a></li>
-						</ul></li>
+							<li><a
+								href="${pageContext.request.contextPath}/ordersImport/data"><i
+									class="fa fa-circle-o"></i>Order Import</a></li>
+							<li><a
+								href="${pageContext.request.contextPath}/ordersExport/data"><i
+									class="fa fa-circle-o"></i>Order Export</a></li>
+						</ul>
 				</ul>
 			</section>
 			<!-- /.sidebar -->
@@ -238,3 +246,18 @@
 					<li class="active">Blank page</li>
 				</ol>
 			</section>
+			<c:choose>
+				<c:when test="${empty err}">
+					<div class="alert alert-success" style="display: none">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						${err}
+					</div>
+				</c:otherwise>
+			</c:choose>
