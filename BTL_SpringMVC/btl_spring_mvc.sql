@@ -2,6 +2,12 @@ create database springmvc
 go
 use springmvc
 go
+create table account(
+	aid int primary key identity,
+	accountName varchar(50) not null,
+	password varchar(20) not null
+)
+go
 create table category
 (
     cid int PRIMARY key identity,
